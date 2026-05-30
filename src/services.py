@@ -1,3 +1,4 @@
+#Необходимо для сдачи 2 части программы(сервисы - кешбек)
 import json
 import pandas as pd
 from config import PATH_TO_OPERATIONS
