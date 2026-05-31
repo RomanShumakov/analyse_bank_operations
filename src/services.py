@@ -1,13 +1,12 @@
 #Необходимо для сдачи 2 части программы(сервисы - кешбек)
 import json
 import pandas as pd
-from config import PATH_TO_OPERATIONS
 import json
 import openpyxl
 from src.utils import excel_reader, filter_operations
 
 
-def cashback_categories(df: pd.DataFrame):
+def cashback_categories(df: pd.DataFrame) -> str:
     """Функция возврата суммы всех операций по категориям в json-формате для последующего анализа выгодности кешбека"""
     df = df[df["Сумма операции"] > 0]
 
