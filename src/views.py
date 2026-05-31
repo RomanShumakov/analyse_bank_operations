@@ -20,6 +20,7 @@ def filter_operations(operations_df, year, month):
     return filter_df
 
 fill = filter_operations(readed_df, 2021, 4)
+fill["Дата операции"] = fill["Дата операции"].astype(str)
 fill_dict = fill.to_dict(orient='records')
 
 with open("sas.json", "w", encoding='utf-8') as f:
