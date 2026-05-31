@@ -1,5 +1,5 @@
 import json
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 import pandas as pd
 import pytest
@@ -8,7 +8,7 @@ from src.reports import search
 
 
 @patch("src.reports.excel_reader")
-def test_search_success(mock_excel) -> None:
+def test_search_success(mock_excel: Mock) -> None:
     mock_excel.return_value = pd.DataFrame(
         [
             {"Категория": "Продукты", "Описание": "Пятерочка", "Сумма": -500},
@@ -22,7 +22,7 @@ def test_search_success(mock_excel) -> None:
 
 
 @patch("src.reports.excel_reader")
-def test_search_no_results(mock_excel) -> None:
+def test_search_no_results(mock_excel: Mock) -> None:
     # Подсовываем данные, где нет "Авиабилетов"
     mock_excel.return_value = pd.DataFrame([{"Категория": "Продукты", "Описание": "Молоко", "Сумма": -100}])
     result = search("Авиабилеты")
@@ -32,14 +32,14 @@ def test_search_no_results(mock_excel) -> None:
 
 
 @patch("src.reports.excel_reader")
-def test_search_empty_df(mock_excel) -> None:
+def test_search_empty_df(mock_excel: Mock) -> None:
     mock_excel.return_value = pd.DataFrame()
     result = search("Что угодно")
     assert json.loads(result) == []
 
 
 @patch("src.reports.excel_reader")
-def test_search_exception(mock_excel) -> None:
+def test_search_exception(mock_excel: Mock) -> None:
     mock_excel.side_effect = Exception("Crash!")
     result = search("test")
     assert json.loads(result) == []

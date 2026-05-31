@@ -1,6 +1,5 @@
 import json
-from typing import Dict, Generator
-from typing import Any
+from typing import Dict, Generator, Any
 import requests
 
 from config import PATH_TO_USER_SETTINGS
@@ -12,7 +11,7 @@ def settings_reader() -> dict[str | Any]:
         return json.load(file)
 
 
-def get_currency_rate(codes: list) -> Generator[dict]:
+def get_currency_rate(codes: list) -> Generator[Dict]:
     """Функция получения настроенных пользователем курсов валют от ЦБ РФ"""
     jsonfile = requests.get("https://www.cbr-xml-daily.ru/daily_json.js")
     datafile = jsonfile.json()
@@ -21,7 +20,7 @@ def get_currency_rate(codes: list) -> Generator[dict]:
             yield {"currency_code": valute_code, "rate": datafile["Valute"][valute_code]["Value"]}
 
 
-def get_currency_stocks(stocks: list) -> Generator[dict]:
+def get_currency_stocks(stocks: list) -> Generator[Dict]:
     """Функция получения цен настроенных пользователем акций по интернет-запросу к сайту iss.moex.com"""
     for stock in stocks:
         jsonfile = requests.get(f"https://iss.moex.com/iss/engines/stock/markets/shares/securities/{stock}.json")
