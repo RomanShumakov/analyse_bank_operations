@@ -44,4 +44,4 @@ def search(data_for_search: str) -> str:
     return filtered_description_json
 
 
-print(search("Супермаркеты"))
+# print(search("Дом и ремонт"))
