@@ -1,8 +1,11 @@
-import pytest
-from unittest.mock import patch
-import pandas as pd
 import json
+from unittest.mock import patch
+
+import pandas as pd
+import pytest
+
 from src.reports import search
+
 
 @patch("src.reports.excel_reader")
 def test_search_success(mock_excel):

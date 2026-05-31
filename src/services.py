@@ -1,8 +1,9 @@
 #Необходимо для сдачи 2 части программы(сервисы - кешбек)
 import json
-import pandas as pd
-import json
+
 import openpyxl
+import pandas as pd
+
 from src.utils import excel_reader, filter_operations
 
 

@@ -1,11 +1,11 @@
-from freezegun import freeze_time
-
-import pytest
-import pandas as pd
 from datetime import datetime
 from unittest.mock import patch
 
-from src.utils import greeting, filter_operations, cashback_categories, top_transactions
+import pandas as pd
+import pytest
+from freezegun import freeze_time
+
+from src.utils import cashback_categories, filter_operations, greeting, top_transactions
 
 
 def test_greeting():

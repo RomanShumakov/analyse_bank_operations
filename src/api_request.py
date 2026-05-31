@@ -1,7 +1,9 @@
-import requests
 import json
+from typing import Dict, Generator
+
+import requests
+
 from config import PATH_TO_USER_SETTINGS
-from typing import Generator, Dict
 
 
 def settings_reader() -> dict[list]:

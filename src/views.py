@@ -1,6 +1,8 @@
-from src.utils import greeting, excel_reader, filter_operations, cashback_categories, top_transactions
-from src.api_request import settings_reader, get_currency_rate, get_currency_stocks
 import json
+
+from src.api_request import get_currency_rate, get_currency_stocks, settings_reader
+from src.utils import cashback_categories, excel_reader, filter_operations, greeting, top_transactions
+
 
 def main():
     """Основная логика программы, вынесенная в функцию"""

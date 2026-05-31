@@ -1,8 +1,11 @@
-import pytest
-import pandas as pd
 import json
+
+import pandas as pd
+import pytest
+
 # Замени 'your_filename' на имя файла, который ты мне скинул
 from src.services import cashback_categories
+
 
 def test_cashback_categories_positive():
     """Проверяем, что сумма считается только для положительных операций и группируется"""

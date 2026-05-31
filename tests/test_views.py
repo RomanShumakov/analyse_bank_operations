@@ -1,13 +1,14 @@
-from src.utils import greeting, excel_reader, filter_operations, cashback_categories, top_transactions
-from src.api_request import settings_reader, get_currency_rate, get_currency_stocks
 import json
-import pytest
-from unittest.mock import patch, MagicMock
-import json
+from unittest.mock import MagicMock, patch
+
 import pandas as pd
+import pytest
 
-
+from src.api_request import get_currency_rate, get_currency_stocks, settings_reader
+from src.utils import cashback_categories, excel_reader, filter_operations, greeting, top_transactions
 from src.views import main
+
+
 @patch("builtins.input", side_effect=["2023", "5"])
 @patch("src.views.excel_reader")
 @patch("src.views.settings_reader")

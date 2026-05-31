@@ -1,5 +1,6 @@
-import logging
 import json
+import logging
+
 from config import PATH_TO_LOGGER
 from src.views import excel_reader
 

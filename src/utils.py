@@ -1,8 +1,11 @@
 import json
 from datetime import datetime
-import pandas as pd
-from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
+
 import openpyxl
+import pandas as pd
+
+from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
+
 
 def greeting() -> str:
     "Функция приветствия пользователя в зависсимости от времени использования программы"

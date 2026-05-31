@@ -1,9 +1,10 @@
-import unittest
-from unittest.mock import patch, mock_open
 import json
+import unittest
+from unittest.mock import mock_open, patch
 
 # Предположим, твой файл называется utils.py, замени на реальное имя
-from src.api_request import settings_reader, get_currency_rate, get_currency_stocks
+from src.api_request import get_currency_rate, get_currency_stocks, settings_reader
+
 
 class TestFinancialUtils(unittest.TestCase):
 
