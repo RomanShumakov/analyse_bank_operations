@@ -1,6 +1,4 @@
-import json
 from datetime import datetime
-import openpyxl
 import pandas as pd
 
 from config import PATH_TO_OPERATIONS

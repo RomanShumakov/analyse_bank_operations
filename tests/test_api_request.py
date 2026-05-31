@@ -1,8 +1,6 @@
-import json
 import unittest
 from unittest.mock import mock_open, patch
 
-# Предположим, твой файл называется utils.py, замени на реальное имя
 from src.api_request import get_currency_rate, get_currency_stocks, settings_reader
 
 
@@ -20,12 +18,10 @@ class TestFinancialUtils(unittest.TestCase):
     @patch("requests.get")
     def test_get_currency_rate(self, mock_get):
         """Тестируем получение курса валют (Mock ЦБ РФ)"""
-        # Имитируем ответ от API ЦБ
         mock_response = mock_get.return_value
         mock_response.json.return_value = {"Valute": {"USD": {"Value": 90.5}, "EUR": {"Value": 100.2}}}
 
         codes = ["USD"]
-        # Превращаем генератор в список, чтобы проверить данные
         result = list(get_currency_rate(codes))
 
         self.assertEqual(len(result), 1)
@@ -38,7 +34,7 @@ class TestFinancialUtils(unittest.TestCase):
         # Имитируем ответ от MOEX
         mock_response = mock_get.return_value
         mock_response.json.return_value = {
-            "securities": {"data": [[None, None, None, 250.5]]}  # Цена сидит в 4-м элементе (индекс 3)
+            "securities": {"data": [[None, None, None, 250.5]]}
         }
 
         stocks = ["GAZP"]

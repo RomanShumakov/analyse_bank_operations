@@ -2,7 +2,6 @@ import json
 from unittest.mock import patch, Mock
 
 import pandas as pd
-import pytest
 
 from src.reports import search
 

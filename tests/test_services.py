@@ -1,7 +1,6 @@
 import json
 
 import pandas as pd
-import pytest
 
 # Замени 'your_filename' на имя файла, который ты мне скинул
 from src.services import cashback_categories
