@@ -1,4 +1,3 @@
-
 import pandas as pd
 from freezegun import freeze_time
 
