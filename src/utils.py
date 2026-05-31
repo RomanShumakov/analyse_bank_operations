@@ -3,6 +3,7 @@ from datetime import datetime
 
 import pandas as pd
 from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
+import openpyxl
 
 def excel_reader():
     """Чтение excel-файла с конвертацией в формат DateTime"""
@@ -27,13 +28,15 @@ with open("sas.json", "w", encoding='utf-8') as f:
     json.dump(fill_dict, f, ensure_ascii=False, indent=4)
 
 
+def cashback_categories() -> list[dict]:
+    """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
+    df = pd.read_excel(PATH_TO_OPERATIONS)
+    df = df[df["Сумма операции"] < 0]
+    df["last_digits"] = df["Номер карты"].str.replace('*', '')
+    df["total_spent"] = df["Сумма операции"].abs()
+    df["cashback"] = round(df["total_spent"] / 100, 2)
 
+    total_df = df[["last_digits", "total_spent", "cashback"]].groupby("last_digits").sum().reset_index()
 
-
-# from src.greeting import greeting
-# from src.services import cashback_categories
-#
-# def main_func():
-#     greet = greeting()
-#     card_num = cashback_categories()
-#     result = {"greeting": greet, "card": {"last_numbers": card_num, }}
+    data = total_df.to_dict("records")
+    return data
