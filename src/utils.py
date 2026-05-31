@@ -23,7 +23,6 @@ def excel_reader():
     df["Дата операции"] = pd.to_datetime(df["Дата операции"], dayfirst=True)
     return df
 
-readed_df = excel_reader()
 
 def filter_operations(operations_df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
     """Получение данных, отфильтрованных по конкретному месяцу конкретного года"""
@@ -31,13 +30,6 @@ def filter_operations(operations_df: pd.DataFrame, year: int, month: int) -> pd.
     begin_date = datetime(year=year, month=month, day=1, ).strftime("%Y-%m-%d %H:%M:%S")
     filter_df = operations_df[(operations_df["Дата операции"] >= begin_date) & (operations_df["Дата операции"] < end_date)]
     return filter_df
-
-fill = filter_operations(readed_df, 2021, 4)
-fill["Дата операции"] = fill["Дата операции"].astype(str)
-fill_dict = fill.to_dict(orient='records')
-
-with open("sas.json", "w", encoding='utf-8') as f:
-    json.dump(fill_dict, f, ensure_ascii=False, indent=4)
 
 
 def cashback_categories(df: pd.DataFrame) -> list[dict]:
@@ -49,8 +41,8 @@ def cashback_categories(df: pd.DataFrame) -> list[dict]:
 
     total_df = df[["last_digits", "total_spent", "cashback"]].groupby("last_digits").sum().reset_index()
 
-    # data = total_df.to_dict("records")
-    return total_df
+    data = total_df.to_dict("records")
+    return data
 
 def top_transactions(df: pd.DataFrame) -> list[dict]:
     """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
@@ -74,7 +66,4 @@ def top_transactions(df: pd.DataFrame) -> list[dict]:
     data = top_5_df[["date", "amount", "category", "description"]].to_dict("records")
     return data
 
-zu = excel_reader()
-result = top_transactions(zu)
-print(json.dumps(result, ensure_ascii=False, indent=4))
 

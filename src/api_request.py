@@ -9,10 +9,6 @@ def settings_reader() -> dict[list]:
     with open(PATH_TO_USER_SETTINGS, "r", encoding='utf-8') as file:
         return json.load(file)
 
-settings_dict = settings_reader()
-coder = settings_dict["user_currencies"]
-stocker = settings_dict["user_stocks"]
-
 
 def get_currency_rate(codes: list) -> Generator[dict]:
     """Функция получения настроенных пользователем курсов валют от ЦБ РФ"""
