@@ -1,22 +1,32 @@
 import requests
 import json
+from config import PATH_TO_USER_SETTINGS
 
 
-def get_currency_rate(code):
+def settings_reader():
+    """Расшифровка пользовательских конфигураций с извлечением валютных кодов"""
+    with open(PATH_TO_USER_SETTINGS, "r", encoding='utf-8') as file:
+        settings_dict = json.load(file, ensure_ascii=False, indent=4)
+        return settings_dict["user_currencies"]
+
+# res = settings_reader()
+# print(res)
+
+
+codes = ["USD", "EUR"]
+def get_currency_rate(codes):
+    """Получение настроенных пользователем курсов валют от ЦБ РФ"""
     jsonfile = requests.get("https://www.cbr-xml-daily.ru/daily_json.js")
     datafile = jsonfile.json()
     for valute_code in datafile["Valute"]:
-        if valute_code == code:
-            return {
-                "currency_code": code,
-                "rate": datafile["Valute"][code]["Value"]
+        if valute_code in codes:
+            yield {
+                "currency_code": valute_code,
+                "rate": datafile["Valute"][valute_code]["Value"]
             }
 
-# wanted = "EUR"
-# result = get_currency_rate(wanted)
-# print(json.dumps(result, indent=4))
 
-rate = get_currency_rate("USD")
-print(rate)
+rate = get_currency_rate(codes)
+print(list(rate))
 
 api_2 = "https://api.frankfurter.dev/v2/rates?base=USD&quotes=RUB"
