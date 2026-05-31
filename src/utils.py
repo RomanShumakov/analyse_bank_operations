@@ -1,7 +1,11 @@
 import json
 from datetime import datetime
+import pandas as pd
+from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
+import openpyxl
 
-def greeting():
+def greeting() -> str:
+    "Функция приветствия пользователя в зависсимости от времени использования программы"
     enter_time = datetime.now().hour
     if 6 <= enter_time < 12:
         return "Доброе утро"
@@ -12,9 +16,6 @@ def greeting():
     elif 0 <= enter_time < 6:
         return "Доброй ночи"
 
-import pandas as pd
-from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
-import openpyxl
 
 def excel_reader():
     """Чтение excel-файла с конвертацией в формат DateTime"""
@@ -24,7 +25,7 @@ def excel_reader():
 
 readed_df = excel_reader()
 
-def filter_operations(operations_df, year, month):
+def filter_operations(operations_df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
     """Получение данных, отфильтрованных по конкретному месяцу конкретного года"""
     end_date = datetime(year=year, month=month + 1, day=1, ).strftime("%Y-%m-%d %H:%M:%S")
     begin_date = datetime(year=year, month=month, day=1, ).strftime("%Y-%m-%d %H:%M:%S")
@@ -39,9 +40,8 @@ with open("sas.json", "w", encoding='utf-8') as f:
     json.dump(fill_dict, f, ensure_ascii=False, indent=4)
 
 
-def cashback_categories() -> list[dict]:
+def cashback_categories(df: pd.DataFrame) -> list[dict]:
     """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
-    df = pd.read_excel(PATH_TO_OPERATIONS)
     df = df[df["Сумма операции"] < 0]
     df["last_digits"] = df["Номер карты"].str.replace('*', '')
     df["total_spent"] = df["Сумма операции"].abs()
@@ -49,5 +49,32 @@ def cashback_categories() -> list[dict]:
 
     total_df = df[["last_digits", "total_spent", "cashback"]].groupby("last_digits").sum().reset_index()
 
-    data = total_df.to_dict("records")
+    # data = total_df.to_dict("records")
+    return total_df
+
+def top_transactions(df: pd.DataFrame) -> list[dict]:
+    """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
+    df = df[df["Сумма операции"] < 0]
+
+    df = df.rename(columns={
+        "Дата операции": "date",
+        "Сумма операции": "amount",
+        "Категория": "category",
+        "Описание": "description"
+    })
+
+    # Преобразование формата даты, если необходимо
+    df["date"] = pd.to_datetime(df["date"]).dt.strftime('%d.%m.%Y')
+    df["amount"] = df["amount"].abs()
+
+    # Сортировка по сумме и выбор топ-5
+    top_5_df = df.sort_values(by="amount", ascending=False).head(5)
+
+    # Преобразование в формат JSON
+    data = top_5_df[["date", "amount", "category", "description"]].to_dict("records")
     return data
+
+zu = excel_reader()
+result = top_transactions(zu)
+print(json.dumps(result, ensure_ascii=False, indent=4))
+
