@@ -4,8 +4,6 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 import pytest
 
-from src.api_request import get_currency_rate, get_currency_stocks, settings_reader
-from src.utils import cashback_categories, excel_reader, filter_operations, greeting, top_transactions
 from src.views import main
 
 

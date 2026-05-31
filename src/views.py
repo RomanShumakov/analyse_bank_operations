@@ -4,7 +4,7 @@ from src.api_request import get_currency_rate, get_currency_stocks, settings_rea
 from src.utils import cashback_categories, excel_reader, filter_operations, greeting, top_transactions
 
 
-def main():
+def main() -> None:
     """Основная логика программы, вынесенная в функцию"""
     while True:
         input_year = input("Введите год: ")

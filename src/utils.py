@@ -1,10 +1,9 @@
 import json
 from datetime import datetime
-
 import openpyxl
 import pandas as pd
 
-from config import PATH_TO_OPERATIONS, PATH_TO_USER_SETTINGS
+from config import PATH_TO_OPERATIONS
 
 
 def greeting() -> str:
@@ -20,7 +19,7 @@ def greeting() -> str:
         return "Доброй ночи"
 
 
-def excel_reader():
+def excel_reader() -> pd.DataFrame:
     """Чтение excel-файла с конвертацией в формат DateTime"""
     df = pd.read_excel(PATH_TO_OPERATIONS)
     df["Дата операции"] = pd.to_datetime(df["Дата операции"], dayfirst=True)

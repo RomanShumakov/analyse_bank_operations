@@ -8,7 +8,7 @@ from freezegun import freeze_time
 from src.utils import cashback_categories, filter_operations, greeting, top_transactions
 
 
-def test_greeting():
+def test_greeting() -> None:
     """Функция теста приветствия"""
     with freeze_time("2025-01-23 00:00:00"):
         greet = greeting()
@@ -27,7 +27,7 @@ def test_greeting():
         assert greet == "Добрый вечер"
 
 
-def test_filter_operations():
+def test_filter_operations() -> None:
     """Функция теста фильтрации"""
     data = {"Дата операции": ["2023-05-01", "2023-05-15", "2023-06-01"]}
     df = pd.DataFrame(data)
@@ -38,7 +38,7 @@ def test_filter_operations():
     assert len(result) == 2
 
 
-def test_cashback_categories():
+def test_cashback_categories() -> None:
     """Функция тестирования кешбэка по картам"""
     data = {"Номер карты": ["*1234", "*1234", "*5678"], "Сумма операции": [-1000.0, -2000.0, -500.0]}
     df = pd.DataFrame(data)
@@ -50,7 +50,7 @@ def test_cashback_categories():
     assert card_1234["cashback"] == 30.0
 
 
-def test_top_transactions():
+def test_top_transactions() -> None:
     """Функция тестирования топ-5 транзакций"""
     data = {
         "Дата операции": ["01.01.2023"] * 6,

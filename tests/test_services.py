@@ -7,7 +7,7 @@ import pytest
 from src.services import cashback_categories
 
 
-def test_cashback_categories_positive():
+def test_cashback_categories_positive() -> None:
     """Проверяем, что сумма считается только для положительных операций и группируется"""
     data = {
         "Категория": ["Супермаркеты", "Супермаркеты", "Аптеки", "Зарплата"],
@@ -26,7 +26,7 @@ def test_cashback_categories_positive():
     assert supermarket["Сумма операции"] == 300.50
 
 
-def test_cashback_empty_df():
+def test_cashback_empty_df() -> None:
     """Проверяем работу с пустым DataFrame"""
     df = pd.DataFrame(columns=["Категория", "Сумма операции"])
     result_json = cashback_categories(df)

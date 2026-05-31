@@ -1,12 +1,12 @@
 import json
 from typing import Dict, Generator
-
+from typing import Any
 import requests
 
 from config import PATH_TO_USER_SETTINGS
 
 
-def settings_reader() -> dict[list]:
+def settings_reader() -> dict[str | Any]:
     """Расшифровка пользовательских конфигураций"""
     with open(PATH_TO_USER_SETTINGS, "r", encoding="utf-8") as file:
         return json.load(file)
