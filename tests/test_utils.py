@@ -26,11 +26,10 @@ def test_greeting():
         greet = greeting()
         assert greet == "Добрый вечер"
 
+
 def test_filter_operations():
     """Функция теста фильтрации"""
-    data = {
-        "Дата операции": ["2023-05-01", "2023-05-15", "2023-06-01"]
-    }
+    data = {"Дата операции": ["2023-05-01", "2023-05-15", "2023-06-01"]}
     df = pd.DataFrame(data)
     df["Дата операции"] = pd.to_datetime(df["Дата операции"])
 
@@ -38,12 +37,10 @@ def test_filter_operations():
     result = filter_operations(df, 2023, 5)
     assert len(result) == 2
 
+
 def test_cashback_categories():
     """Функция тестирования кешбэка по картам"""
-    data = {
-        "Номер карты": ["*1234", "*1234", "*5678"],
-        "Сумма операции": [-1000.0, -2000.0, -500.0]
-    }
+    data = {"Номер карты": ["*1234", "*1234", "*5678"], "Сумма операции": [-1000.0, -2000.0, -500.0]}
     df = pd.DataFrame(data)
     result = cashback_categories(df)
 
@@ -59,7 +56,7 @@ def test_top_transactions():
         "Дата операции": ["01.01.2023"] * 6,
         "Сумма операции": [-100, -500, -200, -1000, -50, -300],
         "Категория": ["А"] * 6,
-        "Описание": ["Б"] * 6
+        "Описание": ["Б"] * 6,
     }
     df = pd.DataFrame(data)
     result = top_transactions(df)
@@ -67,6 +64,3 @@ def test_top_transactions():
     assert len(result) == 5
     # Самая крупная трата (1000) должна быть первой
     assert result[0]["amount"] == 1000.0
-
-
-

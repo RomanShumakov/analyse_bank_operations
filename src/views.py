@@ -41,10 +41,11 @@ def main():
         "cards": cards,
         "top_transactions": top_5,
         "currency_rates": currency_rates,
-        "stock_prices": stock_prices
+        "stock_prices": stock_prices,
     }
 
     print(json.dumps(resulto, ensure_ascii=False, indent=4))
+
 
 if __name__ == "__main__":
     main()

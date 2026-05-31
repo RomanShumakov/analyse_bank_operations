@@ -29,16 +29,26 @@ def excel_reader():
 
 def filter_operations(operations_df: pd.DataFrame, year: int, month: int) -> pd.DataFrame:
     """Получение данных, отфильтрованных по конкретному месяцу конкретного года"""
-    end_date = datetime(year=year, month=month + 1, day=1, ).strftime("%Y-%m-%d %H:%M:%S")
-    begin_date = datetime(year=year, month=month, day=1, ).strftime("%Y-%m-%d %H:%M:%S")
-    filter_df = operations_df[(operations_df["Дата операции"] >= begin_date) & (operations_df["Дата операции"] < end_date)]
+    end_date = datetime(
+        year=year,
+        month=month + 1,
+        day=1,
+    ).strftime("%Y-%m-%d %H:%M:%S")
+    begin_date = datetime(
+        year=year,
+        month=month,
+        day=1,
+    ).strftime("%Y-%m-%d %H:%M:%S")
+    filter_df = operations_df[
+        (operations_df["Дата операции"] >= begin_date) & (operations_df["Дата операции"] < end_date)
+    ]
     return filter_df
 
 
 def cashback_categories(df: pd.DataFrame) -> list[dict]:
     """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
     df = df[df["Сумма операции"] < 0]
-    df["last_digits"] = df["Номер карты"].str.replace('*', '')
+    df["last_digits"] = df["Номер карты"].str.replace("*", "")
     df["total_spent"] = df["Сумма операции"].abs()
     df["cashback"] = round(df["total_spent"] / 100, 2)
 
@@ -47,19 +57,22 @@ def cashback_categories(df: pd.DataFrame) -> list[dict]:
     data = total_df.to_dict("records")
     return data
 
+
 def top_transactions(df: pd.DataFrame) -> list[dict]:
     """Функция возврата суммы всех трат по каждой карте и получения кешбека"""
     df = df[df["Сумма операции"] < 0]
 
-    df = df.rename(columns={
-        "Дата операции": "date",
-        "Сумма операции": "amount",
-        "Категория": "category",
-        "Описание": "description"
-    })
+    df = df.rename(
+        columns={
+            "Дата операции": "date",
+            "Сумма операции": "amount",
+            "Категория": "category",
+            "Описание": "description",
+        }
+    )
 
     # Преобразование формата даты, если необходимо
-    df["date"] = pd.to_datetime(df["date"]).dt.strftime('%d.%m.%Y')
+    df["date"] = pd.to_datetime(df["date"]).dt.strftime("%d.%m.%Y")
     df["amount"] = df["amount"].abs()
 
     # Сортировка по сумме и выбор топ-5
@@ -68,5 +81,3 @@ def top_transactions(df: pd.DataFrame) -> list[dict]:
     # Преобразование в формат JSON
     data = top_5_df[["date", "amount", "category", "description"]].to_dict("records")
     return data
-
-

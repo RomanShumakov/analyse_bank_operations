@@ -1,4 +1,4 @@
-#Необходимо для сдачи 2 части программы(сервисы - кешбек)
+# Необходимо для сдачи 2 части программы(сервисы - кешбек)
 import json
 
 import openpyxl
@@ -15,6 +15,7 @@ def cashback_categories(df: pd.DataFrame) -> str:
 
     data = total_df.to_dict("records")
     return json.dumps(data, ensure_ascii=False, indent=4)
+
 
 if __name__ == "__main__":
 

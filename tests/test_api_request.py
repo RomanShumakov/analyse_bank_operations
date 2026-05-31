@@ -22,12 +22,7 @@ class TestFinancialUtils(unittest.TestCase):
         """Тестируем получение курса валют (Mock ЦБ РФ)"""
         # Имитируем ответ от API ЦБ
         mock_response = mock_get.return_value
-        mock_response.json.return_value = {
-            "Valute": {
-                "USD": {"Value": 90.5},
-                "EUR": {"Value": 100.2}
-            }
-        }
+        mock_response.json.return_value = {"Valute": {"USD": {"Value": 90.5}, "EUR": {"Value": 100.2}}}
 
         codes = ["USD"]
         # Превращаем генератор в список, чтобы проверить данные
@@ -43,11 +38,7 @@ class TestFinancialUtils(unittest.TestCase):
         # Имитируем ответ от MOEX
         mock_response = mock_get.return_value
         mock_response.json.return_value = {
-            "securities": {
-                "data": [
-                    [None, None, None, 250.5] # Цена сидит в 4-м элементе (индекс 3)
-                ]
-            }
+            "securities": {"data": [[None, None, None, 250.5]]}  # Цена сидит в 4-м элементе (индекс 3)
         }
 
         stocks = ["GAZP"]
@@ -56,6 +47,7 @@ class TestFinancialUtils(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["stock"], "GAZP")
         self.assertEqual(result[0]["price"], 250.5)
+
 
 if __name__ == "__main__":
     unittest.main()
