@@ -25,4 +25,4 @@ def get_currency_stocks(stocks: list) -> Generator[Dict]:
     for stock in stocks:
         jsonfile = requests.get(f"https://iss.moex.com/iss/engines/stock/markets/shares/securities/{stock}.json")
         datafile = jsonfile.json()
-        yield {"stock": stock, "price": datafile["securities"]["data"][0][3]}
+        yield {"stock": stock, "price": datafile["securities"]["data"][-1][3]}
