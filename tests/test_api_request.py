@@ -31,7 +31,6 @@ class TestFinancialUtils(unittest.TestCase):
     @patch("requests.get")
     def test_get_currency_stocks(self, mock_get):
         """Тестируем получение акций (Mock MOEX)"""
-        # Имитируем ответ от MOEX
         mock_response = mock_get.return_value
         mock_response.json.return_value = {"securities": {"data": [[None, None, None, 250.5]]}}
 

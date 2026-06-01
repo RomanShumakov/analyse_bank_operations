@@ -68,13 +68,10 @@ def top_transactions(df: pd.DataFrame) -> list[dict]:
         }
     )
 
-    # Преобразование формата даты, если необходимо
     df["date"] = pd.to_datetime(df["date"]).dt.strftime("%d.%m.%Y")
     df["amount"] = df["amount"].abs()
 
-    # Сортировка по сумме и выбор топ-5
     top_5_df = df.sort_values(by="amount", ascending=False).head(5)
 
-    # Преобразование в формат JSON
     data = top_5_df[["date", "amount", "category", "description"]].to_dict("records")
     return data
