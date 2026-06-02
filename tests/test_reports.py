@@ -22,11 +22,9 @@ def test_search_success(mock_excel: Mock) -> None:
 
 @patch("src.reports.excel_reader")
 def test_search_no_results(mock_excel: Mock) -> None:
-    # Подсовываем данные, где нет "Авиабилетов"
     mock_excel.return_value = pd.DataFrame([{"Категория": "Продукты", "Описание": "Молоко", "Сумма": -100}])
     result = search("Авиабилеты")
     data = json.loads(result)
-    # Теперь он точно должен быть пустым, так как мок перекрыл реальный файл
     assert data == []
 
 

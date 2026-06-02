@@ -29,7 +29,6 @@ def search(data_for_search: str) -> str:
             | df["Описание"].astype(str).str.contains(data_for_search, case=False)
         ]
 
-        # Добавили date_format='iso', чтобы pytest не ругался
         result_json = filtered_df.to_json(orient="records", force_ascii=False, indent=4, date_format="iso")
 
         logger.info("Поиск успешно завершен")

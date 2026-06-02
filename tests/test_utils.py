@@ -40,7 +40,6 @@ def test_cashback_categories() -> None:
     df = pd.DataFrame(data)
     result = cashback_categories(df)
 
-    # Проверяем карту *1234 (должно быть 1000 + 2000 = 3000 трат и 30 кешбэка)
     card_1234 = next(item for item in result if item["last_digits"] == "1234")
     assert card_1234["total_spent"] == 3000.0
     assert card_1234["cashback"] == 30.0
@@ -58,5 +57,4 @@ def test_top_transactions() -> None:
     result = top_transactions(df)
 
     assert len(result) == 5
-    # Самая крупная трата (1000) должна быть первой
     assert result[0]["amount"] == 1000.0
